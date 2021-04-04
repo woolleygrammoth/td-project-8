@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+
+* {
+    font-family: "Quicksand";
+    box-sizing: border-box;
+}
+
+body {
+    margin: 3em;
+    background-color: #FCFCFC;
+}
+
+#title {
+    font-weight: 600;
+    font-size: 1.25em;
+    color: darkslategray;
+    margin-bottom: 1.5em;
+    text-align: center;
+}
+
+.name {
+    color: #333;
+    font-size: 1em;
+    margin: 0.5em;
+}
+
+.email, 
+.city {
+    color: slategrey;
+    font-size: 12px;
+    margin: 0.5em;
+}
+
+img {
+    width: 6em;
+    height: 6em;
+    border-radius: 50%;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    row-gap: 1.5em;
+    column-gap: 1.75em;
+    justify-items: center;
+    justify-content: space-around;
+}
+
+.profile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    margin: 0 2em;
+    width: fit-content;
+    background-color: white;
+    border: 1px solid #E1E1E1;
+    border-radius: 10px;
+}
+
+@media (min-width: 768px) {
+    #title {
+        text-align: left;
+    }
+}
