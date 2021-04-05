@@ -1,6 +1,6 @@
 const main = document.querySelector('main');
 const section = document.querySelector('#popups');
-const url = 'https://randomuser.me/api/';
+const url = 'https://randomuser.me/api/?nat=us';
 const overlay = document.querySelector('.overlay');
 // Gets user info from url, parses to json, and isolates the results object
 async function getUserInfo(url) {
@@ -96,21 +96,71 @@ main.addEventListener('click', e => {
         section.style.display = 'block';
         thisPopup.style.display = 'flex';
         overlay.style.display = 'block';
+        //hide left(right) popup button if this popup is the first(last)
+        if (index === 0) {
+            const leftButton = thisPopup.lastElementChild.firstElementChild;
+            leftButton.setAttribute('disabled', true);
+        } else if (index === profiles.length - 1) {
+            const rightButton = thisPopup.lastElementChild.lastElementChild;
+            rightButton.setAttribute('disabled', true);
+        }
     }
 });
 //event listener to close the popup window when the x or the overlay are clicked
-xButtons = [...document.querySelectorAll('.x')];
-[overlay, ...xButtons].forEach(element => element.addEventListener('click', e => {
+;
+
+[overlay, section].forEach(element => element.addEventListener('click', e => {
+    let thisPopup; 
     popups.forEach(popup => {
         if (popup.style.display === 'flex') {
-            popup.style.display = 'none';
-        }
-        e.target.style.display = 'none';
-        section.style.display = 'none';
+            thisPopup = popup;
+        } 
     })
+    if (e.target.className === 'overlay' || e.target.className === 'x') {
+        overlay.style.display = 'none'; 
+        thisPopup.style.display = 'none';
+        section.style.display = 'none';
+    }
 }));
+//event listener on search bar to filter the directory by name
+const searchBar = document.querySelector('input');
+searchBar.addEventListener('keyup', () => {
+    const currentText = searchBar.value.toUpperCase();
+    const names = [...document.querySelectorAll('.profile .name')];
+    names.forEach(name => {
+        currentName = name.textContent.toUpperCase();
+        currentDiv = name.parentNode.parentNode;
+        if (currentName.includes(currentText)) {
+            currentDiv.style.display = 'flex';
+        } else {
+            currentDiv.style.display = 'none';
+        }
+    }
+
+    );
+});
 
 
+//event listener to scroll between popups
+section.addEventListener('click', (e) => {
+    if (e.target.className === 'right' || e.target.className === 'left') {
+        const btn = e.target;
+        const thisDiv = btn.parentNode.parentNode;
+        const index = popups.indexOf(thisDiv);
+        thisDiv.style.display = 'none';
+        if (btn.className === 'left') {
+            popups[index - 1].style.display = 'flex';
+            if (index === 1) {
+                popups[index - 1].lastElementChild.firstElementChild.setAttribute('disabled', true);
+            }
+        } else if (btn.className === 'right') {
+            popups[index + 1].style.display = 'flex';
+            if (index === popups.length - 2) {
+                popups[index + 1].lastElementChild.lastElementChild.setAttribute('disabled', true);
+            }
+        }
+    }
+});
 
 
 /* <div class='popup'>
